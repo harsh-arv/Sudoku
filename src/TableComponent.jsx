@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./TableComponent.scss";
-import { randamValueAssigner } from "./constant";
+import {
+  colCheck,
+  getSubgridIndices,
+  getSudokuSubgrid,
+  randamValueAssigner,
+  rowCheck,
+} from "./constant";
 
 const TableComponent = () => {
-  // Create a 9x9 matrix
   const [data, setData] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -16,46 +21,80 @@ const TableComponent = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
 
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedCol, setSelectedCol] = useState(null);
+  const [highlightedSubgrid, setHighlightedSubgrid] = useState([]);
+
+  // Function to handle when a cell is clicked
+  const handleCellClick = (rowIndex, colIndex) => {
+    setSelectedRow(rowIndex);
+    setSelectedCol(colIndex);
+    setHighlightedSubgrid(getSubgridIndices(rowIndex, colIndex));
+  };
+
   const [tableData, setTableData] = useState(data);
 
   const handleData = (value, rowIndex, colIndex) => {
-    if (value > 0 && value < 9) {
-      console.log(value, rowIndex, colIndex);
-      setData((prev) => {
-        const newData = [...prev];
-        newData[rowIndex] = [...newData[rowIndex]];
-        newData[rowIndex][colIndex] = value;
-        return newData;
-      });
+    if (value > 0 && value < 10) {
+      // console.log(value, rowIndex, colIndex);
+      // getSudokuSubgrid(data, rowIndex, colIndex, value);
+      if (
+        rowCheck(data, value, rowIndex, colIndex) &&
+        colCheck(data, colIndex, value) &&
+        getSudokuSubgrid(data, rowIndex, colIndex, value)
+      )
+        setData((prev) => {
+          const newData = [...prev];
+          newData[rowIndex] = [...newData[rowIndex]];
+          newData[rowIndex][colIndex] = Number(value);
+          return newData;
+        });
     }
   };
 
   useEffect(() => {
-    // console.log(data);
-  }, [data]);
-
-  useEffect(() => {
-    setTableData(randamValueAssigner(data, 4));
-    setData(tableData);
-
-    // console.log(x, "hjj");
+    const updatedTableData = randamValueAssigner(data, 4);
+    setTableData(updatedTableData);
+    setData(updatedTableData);
   }, []);
 
   return (
-    <table border="1">
+    <table border="1" className="table-container">
       <tbody>
         {tableData.map((dataRow, rowIndex) => (
-          <tr key={rowIndex}>
+          <tr
+            key={rowIndex}
+            className={selectedRow === rowIndex ? "active-cells" : ""}
+          >
             {dataRow.map((dataCol, colIndex) => (
-              <td key={colIndex}>
-                {/* Row {dataRow} Col {dataCol} */}
+              <td
+                key={colIndex}
+                className={
+                  selectedCol === colIndex ||
+                  selectedRow === rowIndex ||
+                  highlightedSubgrid.some(
+                    (cell) => cell.row === rowIndex && cell.col === colIndex
+                  )
+                    ? "active-cells"
+                    : ""
+                }
+                onClick={() => handleCellClick(rowIndex, colIndex)}
+              >
                 {dataCol == 0 ? (
                   <input
-                    type="number"
-                    // value={dataCol}
-                    onChange={(e) =>
-                      handleData(e.target.value, rowIndex, colIndex)
-                    }
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[1-9]"
+                    onKeyDown={(e) => {
+                      if (!/^[1-9]$/.test(e.key) && e.key !== "Backspace") {
+                        e.preventDefault();
+                      }
+                    }}
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      e.target.value = e.target.value.slice(-1);
+                      handleData(e.target.value, rowIndex, colIndex);
+                    }}
                   />
                 ) : (
                   dataCol

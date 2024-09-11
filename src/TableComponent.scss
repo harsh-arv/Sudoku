@@ -1,52 +1,92 @@
 table {
-  width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
   font-family: Arial, sans-serif;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
+  width: 50%;
+  height: 80%;
+  border-collapse: collapse;
+}
+
+.table-container {
+}
+
+.active-cells {
+  background-color: #d6e7f5;
+}
+
+/* Bolder border styling for every 3rd row */
+.table-container tr:nth-child(3n) td {
+  border-bottom: 4px solid #8da6c1; /* Bolder bottom border for every 3rd row */
+}
+
+/* Bolder border styling for every 3rd column */
+.table-container td:nth-child(3n) {
+  border-right: 4px solid #8da6c1; /* Bolder right border for every 3rd column */
+}
+
+/* Ensure the last column and row have the bolder border if needed */
+.table-container td:last-child {
+  border-right: 4px solid #8da6c1;
 }
 
 td {
   padding: 15px;
   border: 1px solid #ddd;
-  background-color: #f9f9f9;
+  width: 50px;
+  height: 50px;
   transition: background-color 0.3s ease;
 }
 
 td:hover {
-  background-color: #f1f1f1;
+  background-color: #f4cd59;
 }
 
 tr:nth-child(even) td {
-  background-color: #f2f2f2;
+  // background-color: #f2f2f2;
 }
 
 th {
   padding: 15px;
-  background-color: #4CAF50;
+  // background-color: #4CAF50;
   color: white;
   border: 1px solid #ddd;
 }
 
 tr:nth-child(odd) td {
-  background-color: #ffffff;
+  // background-color: #ffffff;
 }
 
-td:first-child {
-  font-weight: bold;
-}
+// td:first-child {
+//   font-weight: bolder;
+// }
 
 td {
-  color: #333;
-  font-size: 16px;
+  color: #2f3f4e;
+  font-weight: bolder;
+  font-size: 24px;
+  padding: 0px;
+  border: 3px solid #bccbdc;
+  text-align: center;
 }
-
 
 input {
   width: 100%;
   height: 100%;
   border: none;
-  padding: 10px; /* Adjust for more spacing inside the input */
+  padding: 1px; /* Adjust for more spacing inside the input */
   box-sizing: border-box; /* Ensures padding is included in width/height */
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  color: #207edf;
+  // cursor: crosshair;
+}
+
+input:focus {
+  background-color: #ecc244 !important;
+  outline: none;
+  caret-color: transparent;
 }
