@@ -1,0 +1,37 @@
+.number-pad {
+  //   display: flex;
+  //   flex-direction: column;
+  // grid-template-columns: repeat(3, 1fr);
+  // grid-template-rows: repeat(4, 1fr);
+  // gap: 10px;
+  width: 70%;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+  // border: 1px solid #ccc;
+  // border-radius: 5px;
+
+  > button {
+    padding: 10px;
+  }
+}
+
+.delete-Icon {
+  // font-size: 16px;
+  width: 20px;
+  height: 20px;
+}
+
+.number-pad button {
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

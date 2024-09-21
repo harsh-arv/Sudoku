@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+
+.nav-container {
+  margin: 0px 0px;
+  padding: 0px 10px;
+  background-color: #5c97ee;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .play-pause-container {
+    // display: flex;
+    // align-items: center;
+    // justify-items: center;
+    // height: 100%;
+  }
+
+  .reload-hint-container{
+    
+  }
+
+  .sudoku-title {
+    // display: inline-block;
+    flex-grow: 1; 
+    font-family: "Bungee", sans-serif;
+    font-size: 4rem;
+    color: white;
+    // background-color: #5a8dfe;
+    // padding: 20px;
+    border-radius: 10px;
+    .accent {
+      font-weight: bold;
+      font-size: 3.5rem; /* Slightly larger for the accent letters */
+      text-transform: uppercase;
+      color: #ffffff; /* White color for the text */
+    }
+
+    .text {
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #ffffff; /* Match the color */
+    }
+  }
+}

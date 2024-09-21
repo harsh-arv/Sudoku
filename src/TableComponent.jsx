@@ -8,7 +8,7 @@ import {
   rowCheck,
 } from "./constant";
 
-const TableComponent = () => {
+const TableComponent = ({ play, setPlay }) => {
   const [data, setData] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -38,9 +38,11 @@ const TableComponent = () => {
     if (value > 0 && value < 10) {
       // console.log(value, rowIndex, colIndex);
       // getSudokuSubgrid(data, rowIndex, colIndex, value);
+      console.log("here");
+
       if (
-        rowCheck(data, value, rowIndex, colIndex) &&
-        colCheck(data, colIndex, value) &&
+        rowCheck(data, value, rowIndex, colIndex).isPresent &&
+        colCheck(data, colIndex, value).isPresent &&
         getSudokuSubgrid(data, rowIndex, colIndex, value)
       )
         setData((prev) => {
@@ -56,10 +58,15 @@ const TableComponent = () => {
     const updatedTableData = randamValueAssigner(data, 4);
     setTableData(updatedTableData);
     setData(updatedTableData);
+    console.log(play);
   }, []);
 
+  useEffect(() => {
+    console.log(play);
+  }, [play]);
+
   return (
-    <table border="1" className="table-container">
+    <table border="1" className={`table-container `}>
       <tbody>
         {tableData.map((dataRow, rowIndex) => (
           <tr
@@ -69,15 +76,18 @@ const TableComponent = () => {
             {dataRow.map((dataCol, colIndex) => (
               <td
                 key={colIndex}
-                className={
-                  selectedCol === colIndex ||
-                  selectedRow === rowIndex ||
-                  highlightedSubgrid.some(
-                    (cell) => cell.row === rowIndex && cell.col === colIndex
-                  )
-                    ? "active-cells"
-                    : ""
-                }
+                className={`
+                    ${
+                      selectedCol === colIndex ||
+                      selectedRow === rowIndex ||
+                      highlightedSubgrid.some(
+                        (cell) => cell.row === rowIndex && cell.col === colIndex
+                      )
+                        ? "active-cells"
+                        : ""
+                    }
+                    ${play ? "disable" : ""}
+                  `}
                 onClick={() => handleCellClick(rowIndex, colIndex)}
               >
                 {dataCol == 0 ? (

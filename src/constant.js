@@ -10,7 +10,7 @@ export const randamValueAssigner = (array, count) => {
       } while (
         newData[i][randomCol] !== 0 ||
         newData[i].includes(randomValue) ||
-        colCheck(newData, randomCol, randomValue) ||
+        colCheck(newData, randomCol, randomValue).isPresent ||
         getSudokuSubgrid(newData, i, randomCol, randomValue)
       );
       newData[i][randomCol] = randomValue;
@@ -23,17 +23,21 @@ export const rowCheck = (array, value, rowIndex, colIndex) => {
   array[rowIndex].includes(Number(value))
     ? console.log("Present at Row:", array[rowIndex].indexOf(Number(value)))
     : "";
-  return array[rowIndex].includes(Number(value));
+  // return array[rowIndex].includes(Number(value));
+  return {
+    isPresent: array[rowIndex].includes(Number(value)),
+    presentAt: rowIndex,
+  };
 };
 
 export const colCheck = (array, colIndex, value) => {
   for (let rowIndex = 0; rowIndex < array.length; rowIndex++) {
     if (array[rowIndex][colIndex] === Number(value)) {
       console.log("Present in Row:", rowIndex, "at colIndex:", colIndex);
-      return true;
+      return { isPresent: true, presentAt: rowIndex };
     }
   }
-  return false;
+  return { isPresent: false, presentAt: null };
 };
 
 export const getSudokuSubgrid = (data, rowIndex, colIndex, value) => {
@@ -54,8 +58,6 @@ export const getSudokuSubgrid = (data, rowIndex, colIndex, value) => {
   return subgrid.includes(Number(value)); // Return the 3x3 subgrid as a flat array
 };
 
-
-
 export const getSubgridIndices = (rowIndex, colIndex) => {
   const startRow = Math.floor(rowIndex / 3) * 3;
   const startCol = Math.floor(colIndex / 3) * 3;
@@ -66,6 +68,7 @@ export const getSubgridIndices = (rowIndex, colIndex) => {
       subgridIndices.push({ row: i, col: j });
     }
   }
-
+  console.log(subgridIndices);
+  
   return subgridIndices;
 };
