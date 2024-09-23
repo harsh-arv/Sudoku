@@ -7,8 +7,11 @@ import {
   randamValueAssigner,
   rowCheck,
 } from "./constant";
-
+import { usePlayerContext } from "./PlayerContext";
+import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 const TableComponent = ({ play, setPlay }) => {
+  const { playerInfo, setPlayerInfo } = usePlayerContext();
+
   const [data, setData] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -36,10 +39,6 @@ const TableComponent = ({ play, setPlay }) => {
 
   const handleData = (value, rowIndex, colIndex) => {
     if (value > 0 && value < 10) {
-      // console.log(value, rowIndex, colIndex);
-      // getSudokuSubgrid(data, rowIndex, colIndex, value);
-      console.log("here");
-
       if (
         rowCheck(data, value, rowIndex, colIndex).isPresent &&
         colCheck(data, colIndex, value).isPresent &&
@@ -54,29 +53,43 @@ const TableComponent = ({ play, setPlay }) => {
     }
   };
 
+  const handlePlay = () => {
+    setPlayerInfo((prev) => ({
+      ...prev,
+      isPlay: !play,
+    }));
+  };
+
   useEffect(() => {
     const updatedTableData = randamValueAssigner(data, 4);
     setTableData(updatedTableData);
     setData(updatedTableData);
-    console.log(play);
   }, []);
 
-  useEffect(() => {
-    console.log(play);
-  }, [play]);
+  // useEffect(() => {
+  //   console.log(playerInfo);
+  // }, [playerInfo]);
 
   return (
-    <table border="1" className={`table-container `}>
-      <tbody>
-        {tableData.map((dataRow, rowIndex) => (
-          <tr
-            key={rowIndex}
-            className={selectedRow === rowIndex ? "active-cells" : ""}
-          >
-            {dataRow.map((dataCol, colIndex) => (
-              <td
-                key={colIndex}
-                className={`
+    <div className="parent-table-container">
+      <div className="upper-table-container">
+        {/* <div > */}
+        <label>Difficulty:</label>
+        <h6 className={playerInfo.difficulty}>{playerInfo.difficulty}</h6>
+        {/* </div> */}
+      </div>
+      <div className={`table-container `}>
+        <table border="1">
+          <tbody>
+            {tableData.map((dataRow, rowIndex) => (
+              <tr
+                key={rowIndex}
+                className={selectedRow === rowIndex ? "active-cells" : ""}
+              >
+                {dataRow.map((dataCol, colIndex) => (
+                  <td
+                    key={colIndex}
+                    className={`
                     ${
                       selectedCol === colIndex ||
                       selectedRow === rowIndex ||
@@ -88,33 +101,39 @@ const TableComponent = ({ play, setPlay }) => {
                     }
                     ${play ? "disable" : ""}
                   `}
-                onClick={() => handleCellClick(rowIndex, colIndex)}
-              >
-                {dataCol == 0 ? (
-                  <input
-                    type="tel"
-                    inputMode="numeric"
-                    pattern="[1-9]"
-                    onKeyDown={(e) => {
-                      if (!/^[1-9]$/.test(e.key) && e.key !== "Backspace") {
-                        e.preventDefault();
-                      }
-                    }}
-                    onChange={(e) => {
-                      console.log(e.target.value);
-                      e.target.value = e.target.value.slice(-1);
-                      handleData(e.target.value, rowIndex, colIndex);
-                    }}
-                  />
-                ) : (
-                  dataCol
-                )}
-              </td>
+                    onClick={() => handleCellClick(rowIndex, colIndex)}
+                  >
+                    {dataCol == 0 ? (
+                      <input
+                        type="tel"
+                        inputMode="numeric"
+                        pattern="[1-9]"
+                        onKeyDown={(e) => {
+                          if (!/^[1-9]$/.test(e.key) && e.key !== "Backspace") {
+                            e.preventDefault();
+                          }
+                        }}
+                        onChange={(e) => {
+                          e.target.value = e.target.value.slice(-1);
+                          handleData(e.target.value, rowIndex, colIndex);
+                        }}
+                      />
+                    ) : (
+                      dataCol
+                    )}
+                  </td>
+                ))}
+              </tr>
             ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+          </tbody>
+        </table>
+        {playerInfo.isPlay && (
+          <div className="play-pause-table" onClick={handlePlay}>
+            <PlayCircleRoundedIcon style={{ fontSize: 80 }} />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -1,12 +1,51 @@
 .side-panel-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  .name-container {
     display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
+    color: #344861;
     justify-content: center;
-    .name-container{
+    font-size: 1.8rem;
+    flex-direction: column;
+    text-transform: capitalize;
+  }
+  .shortcuts {
+    display: flex;
+    gap: 20px; /* spacing between icons */
+    color: #5c7cc3;
+
+    .individual-icon-highlighter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      .text-description {
+        color: #325aaf;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .icon-wrapper {
+        background-color: #e6ecf5; /* Background circle color */
+        border-radius: 50%; /* To make the background circular */
+        padding: 10px; /* Size of the circle */
         display: flex;
+        width: 4rem;
+        height: 4rem;
+        color: #325aaf;
+        align-items: center;
         justify-content: center;
-        font-size: 2rem;
+        transition: background-color 0.3s ease; /* Smooth transition */
+      }
+
+      .icon-wrapper:hover {
+        background-color: #d3e0f5; /* Change background color on hover */
+      }
     }
+  }
 }

@@ -72,3 +72,27 @@ export const getSubgridIndices = (rowIndex, colIndex) => {
   
   return subgridIndices;
 };
+
+
+
+
+export function generateGibberishName() {
+  const syllables = [
+      'ba', 'ka', 'la', 'mi', 'no', 'ri', 'zo', 'ta', 'fu', 'jo',
+      'ra', 've', 'si', 'co', 'da', 'po', 'qi', 'xu', 'ye', 'wu'
+  ];
+
+  const nameLength = Math.floor(Math.random() * 3) + 2; // Name length between 2 and 4 syllables
+  let gibberishName = '';
+
+  for (let i = 0; i < nameLength; i++) {
+      const randomIndex = Math.floor(Math.random() * syllables.length);
+      gibberishName += syllables[randomIndex];
+  }
+
+  // Capitalize the first letter
+  gibberishName = gibberishName.charAt(0).toUpperCase() + gibberishName.slice(1);
+  
+  return gibberishName;
+}
+

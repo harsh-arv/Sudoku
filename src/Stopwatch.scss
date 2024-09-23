@@ -20,7 +20,18 @@
 
 .controls {
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  color: white;
+  background-color: #e6ecf5;
+  border-radius: 50%; /* To make the background circular */
+  padding: 10px; /* Size of the circle */
+  display: flex;
+  width: 3.6rem;
+  height: 3.6rem;
+  color: #325aaf;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.controls:hover {
+  background-color: #d3e0f5; /* Change background color on hover */
 }

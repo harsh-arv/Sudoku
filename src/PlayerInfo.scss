@@ -1,0 +1,16 @@
+.player-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .player-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+
+  .player-submit-button{
+    display: flex;
+    justify-content: end;
+  }
+}

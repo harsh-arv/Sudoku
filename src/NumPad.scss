@@ -11,16 +11,17 @@
   flex-direction: row;
   gap: 10px;
   padding: 10px;
-  // border: 1px solid #ccc;
-  // border-radius: 5px;
 
   > button {
     padding: 10px;
   }
+  .new-game-button {
+    background-color: #5c7cc3;
+    color: #f0f0f0;
+  }
 }
 
 .delete-Icon {
-  // font-size: 16px;
   width: 20px;
   height: 20px;
 }
@@ -30,8 +31,17 @@
   height: 100%;
   font-size: 24px;
   font-weight: bold;
-  background-color: #f0f0f0;
+  background-color: #ebeff5;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+.number-pad button:hover {
+  background-color: #d3e0f5; /* Change background color on hover */
+}
+
+.number-pad button:active {
+  background-color: #c0c8e5; /* Change background color when clicked */
+  transform: scale(0.95); /* Slightly scale down for click effect */
 }

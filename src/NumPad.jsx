@@ -1,17 +1,14 @@
 import React from "react";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';import Delete from "./assets/delete.png";
 import "./NumPad.scss";
-import { IconButton } from "@mui/material";
 
 const NumberPad = () => {
-    
-    const handleClick = (value) => {
-        console.log(value);
-      };
-    
+  const handleClick = (value) => {
+    console.log(value);
+  };
+
   return (
     <div className="number-pad">
-     <div className="row">
+      <div className="row">
         <button onClick={() => handleClick(1)}>1</button>
         <button onClick={() => handleClick(2)}>2</button>
         <button onClick={() => handleClick(3)}>3</button>
@@ -27,10 +24,7 @@ const NumberPad = () => {
         <button onClick={() => handleClick(9)}>9</button>
       </div>
       <div className="row">
-        <button>
-          <DeleteOutlineIcon sx={{color:"red", fontSize:"30px"}}/>
-          {/* <img src={Delete} alt="Delete Icon" className="delete-Icon" /> */}
-        </button>
+        <button className="new-game-button">New Game</button>
       </div>
     </div>
   );

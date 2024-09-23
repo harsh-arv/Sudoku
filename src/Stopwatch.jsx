@@ -9,11 +9,13 @@ import IconButton from "@mui/material/IconButton";
 import TimerSharpIcon from "@mui/icons-material/TimerSharp";
 4;
 import stopwa from "./assets/stopwatch.gif";
+import { usePlayerContext } from "./PlayerContext";
 
 const Stopwatch = ({ play, setPlay }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [time, setTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
+  const { playerInfo, setPlayerInfo } = usePlayerContext();
 
   useEffect(() => {
     if (isRunning) {
@@ -31,18 +33,25 @@ const Stopwatch = ({ play, setPlay }) => {
   const handleStart = () => {
     setPlay(!play);
     setIsRunning(true);
+    setPlayerInfo((prev) => ({
+      ...prev,
+      isPlay: !play,
+    }));
   };
 
   const handleStop = () => {
     setPlay(!play);
     setIsRunning(false);
+    setPlayerInfo((prev) => ({
+      ...prev,
+      isPlay: !play,
+    }));
   };
 
-  const handleReset = () => {
-    setIsRunning(false);
-    setPlay(!play);
-    setTime(0);
-  };
+  useEffect(() => {
+    setPlay(playerInfo.isPlay);
+    setIsRunning(!playerInfo.isPlay);
+  }, [playerInfo]);
 
   const formatTime = (time) => {
     const hours = String(Math.floor((time / 3600000) % 60)).padStart(2, "0");
@@ -65,7 +74,8 @@ const Stopwatch = ({ play, setPlay }) => {
         style={{
           width: "80px",
           height: "auto",
-          visibility: play ? "hidden" : "visible",        }}
+          visibility: play ? "hidden" : "visible",
+        }}
       />
 
       <div className="display">
@@ -82,20 +92,16 @@ const Stopwatch = ({ play, setPlay }) => {
       <div className="controls">
         {play ? (
           <Tooltip title="Play">
-            <IconButton>
+            <IconButton onClick={handleStart}>
               <PlayArrowOutlinedIcon
-                onClick={handleStart}
                 sx={{ color: "#007bff", fontSize: "40px" }}
               />
             </IconButton>
           </Tooltip>
         ) : (
           <Tooltip title="Pause">
-            <IconButton>
-              <PauseOutlinedIcon
-                onClick={handleStop}
-                sx={{ color: "#007bff", fontSize: "40px" }}
-              />
+            <IconButton onClick={handleStop}>
+              <PauseOutlinedIcon sx={{ color: "#007bff", fontSize: "40px" }} />
             </IconButton>
           </Tooltip>
         )}
